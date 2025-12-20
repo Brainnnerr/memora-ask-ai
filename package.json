@@ -10,7 +10,7 @@
   "license": "ISC",
   "description": "AI Help Center for Memora",
   "dependencies": {
-    "@google/generative-ai": "^0.21.0",
+   "@google/generative-ai": "^0.21.0",
     "node-appwrite": "^14.1.0"
   }
 }
