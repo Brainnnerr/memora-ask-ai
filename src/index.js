@@ -4,8 +4,7 @@ module.exports = async function (context) {
     // 1. Initialize Gemini with your secret key from Environment Variables
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     
-    // UPDATED: 'gemini-pro' is legacy; 'gemini-1.5-flash' is the stable current model
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
 
     try {
         // 2. Parse the question sent from your Profile.jsx
@@ -31,3 +30,4 @@ module.exports = async function (context) {
         return context.res.json({ error: "The AI is currently unavailable. Please try again later." }, 500);
     }
 };
+
