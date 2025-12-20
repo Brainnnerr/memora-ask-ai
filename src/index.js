@@ -3,10 +3,13 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 module.exports = async function (context) {
     // 1. Initialize Gemini with your secret key from Environment Variables
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    
+    // UPDATED: 'gemini-pro' is legacy; 'gemini-1.5-flash' is the stable current model
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     try {
         // 2. Parse the question sent from your Profile.jsx
+        // Appwrite sends the body as a string, so we parse it
         const payload = JSON.parse(context.req.body);
         const userQuestion = payload.question;
 
@@ -23,7 +26,8 @@ module.exports = async function (context) {
         return context.res.json({ answer: text });
 
     } catch (err) {
+        // Log the error in the Appwrite 'Executions' tab for debugging
         context.error("AI Error: " + err.message);
-        return context.res.json({ error: "I'm having trouble connecting to Gemini." }, 500);
+        return context.res.json({ error: "The AI is currently unavailable. Please try again later." }, 500);
     }
 };
